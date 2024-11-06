@@ -8,7 +8,7 @@ esphome:
   name_add_mac_suffix: false
 api:
   encryption:
-    key: Hq+/KSjAVvLzeUFlg3q9syWz7cFxQlsmRMez8QF+PoI=
+    key: !secret api_encryption_key
 
 
 wifi:

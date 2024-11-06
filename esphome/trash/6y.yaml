@@ -8,6 +8,7 @@ esphome:
   name: $device_name
   friendly_name: NY1-P-WORKBENCH-01
 
+
 esp32:
   board: esp32-c3-devkitm-1
   framework:
@@ -20,24 +21,20 @@ esp32:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-  # use_address: 10.0.40.186
-  # manual_ip:
-  #   static_ip: 10.0.10.175
-  #   gateway: 10.0.10.1
-  #   subnet: 0.0.63.255
   ap:
     ssid: "$(device_name) Fallback Hotspot"
-    password: !secret wifi_password
+    password: !secret fallback_password
 
 logger:
 
 api:
   encryption:
-    key: "JGPTj3vz/HRV2VNucsEkCzxPgrpqEdItCDFzzch1E+k="
+    key: !secret api_encryption_key
 
 ota:
   - platform: esphome
-    password: "02f29704b11f81d01bdc01b6f9624df9"
+    id: my_ota
+    password: !secret ota_password
 
 time:
   - platform: homeassistant

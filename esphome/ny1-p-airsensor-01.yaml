@@ -17,7 +17,7 @@ wifi:
 
 api:
   encryption:
-    key: "T5HSnHHK4HnIdYSdtWaH9D20x7vRL6g00wLygvFXCSE="
+    key: !secret airsensor_01_api
 
 ota:
   platform: esphome

@@ -14,7 +14,7 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: "1Y1c+pcIdN8FsCOFFT9lud3ku2QTkvcOFx+nWh/FG0Q="
+    key: !secret airsensor_02_api
 
 ota:
   platform: esphome

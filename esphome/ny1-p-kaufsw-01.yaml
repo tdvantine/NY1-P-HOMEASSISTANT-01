@@ -10,7 +10,7 @@ esphome:
   friendly_name: NY1-P-KAUFSW-01
 api:
   encryption:
-    key: H7Tfe9O+C7dRNQWusripGxyID8U4CrXrsevcU8NPmfc=
+    key: !secret api_encryption_key
 
 
 wifi:

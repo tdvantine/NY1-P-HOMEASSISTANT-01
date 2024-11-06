@@ -16,11 +16,11 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: "ckOB/xiLMo/UuPaVqBQQG6Wn18RLca4/pwoW5DyJTyk="
+    key: !secret ir_test_api
 
 ota:
   - platform: esphome
-    password: "df6253547259e27e66f7198df3e1b369"
+    password: !secret ir_test_ota
 
 wifi:
   ssid: !secret wifi_ssid

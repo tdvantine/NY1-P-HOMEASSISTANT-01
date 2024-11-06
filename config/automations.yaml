@@ -990,3 +990,16 @@
       kaufb: light.kaufb_05
       last_state_input: input_text.lr_button_last_state
       e1812: 2c5744837baf5cdd5352636b4bba8ea5
+- id: '1730872940403'
+  alias: Nightly Push to Git
+  description: ''
+  triggers:
+  - trigger: time
+    at: 00:00:00
+  conditions: []
+  actions:
+  - action: hassio.addon_start
+    metadata: {}
+    data:
+      addon: 68413af6_git-exporter
+  mode: single

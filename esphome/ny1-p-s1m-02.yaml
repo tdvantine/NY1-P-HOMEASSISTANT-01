@@ -9,6 +9,7 @@ esphome:
   platformio_options:
     board_build.flash_mode: dio
 
+
 esp32:
   board: esp32-c3-devkitm-1
   framework:
@@ -26,11 +27,12 @@ logger:
 
 api:
   encryption:
-    key: "5SPoJ5F0a9ExQ3z/SNym0dc7ZV4tAR4B0+X/yESiS+o="
+    key: !secret api_encryption_key
 
 ota:
   platform: esphome
-  password: "8e05aa59fe059cbe32fdc501181df66b"
+  id: my_ota
+  password: !secret api_encryption_key
 
 output:
   - platform: gpio

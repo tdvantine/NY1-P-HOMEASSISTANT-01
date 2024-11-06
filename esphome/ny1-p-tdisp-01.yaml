@@ -21,19 +21,18 @@ logger:
 
 api:
   encryption:
-    key: "5FdV2V6KgcD+OjPH9xBvpa25e0hvSZb2SEABUpjaNQA="
+    key: !secret tdisp_encryption
 
 ota:
   - platform: esphome
-    password: "7e8d6fc2302d8d7f5bf1da0750fe339c"
+    password: !secret tdisp_ota
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
   ap:
     ssid: "Ny1-P-Tdisp-01 Fallback Hotspot"
-    password: "o6WVnIZl11n7"
-
+    password: !secret fallback_password
 binary_sensor:
   - platform: gpio
     pin:
