@@ -6,21 +6,36 @@ This is my personal Home Assisatnt set up for my house/apartment in NYC. There i
 
 ## Hardware (As Of 11/05/24)
 Proxmox 8.2.4 running on a Lenovo Mini PC
+
 AMD Ryzen 5 PRO 2400GE
+
 15GB of RAM
+
 4 Shelly Relays
+
 1 Dig Uno
+
 5 Kauf Bulbs
+
 3 Aqara Temp/Humidity Sensors
+
 1 Ikea Tradafri Button
+
 2 Aqara Mini Switches
+
 1 Sonoff Zigbee 3.0 Dongle
+
 1 ZBT-1 Dongle (comming soon)
+
 1 Shelly RGBW2
+
 3 Aqara Door/Window Sensors
+
 1 Zooz Zwave Motion Sensor (ZSE18)
 
 ## Future Addtions
 Under and Over cabnit lighting for the kitchen via Dig Uno
+
 More Shelly relays and automations
+
 Guest Automations
