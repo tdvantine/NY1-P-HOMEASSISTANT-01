@@ -1,0 +1,44 @@
+increase_ny1_p_aircon_01_temp_by_1:
+  alias: Increase NY1-P-AIRCON-01 Temp by 1
+  sequence:
+  - action: climate.set_temperature
+    target:
+      entity_id: climate.ny1_p_aircon_01
+    data:
+      temperature: '{{state_attr(''climate.ny1_p_aircon_01'', ''temperature'') | int
+        + 1.0}}'
+  description: ''
+  icon: mdi:thermometer-chevron-up
+decrease_ny1_p_aircon_01_temp_by_1:
+  alias: Decrease NY1-P-AIRCON-01 Temp by 1
+  sequence:
+  - action: climate.set_temperature
+    target:
+      entity_id: climate.ny1_p_aircon_01
+    data:
+      temperature: '{{state_attr(''climate.ny1_p_aircon_01'', ''temperature'') | int
+        - 1.0}}'
+  description: ''
+  icon: mdi:thermometer-chevron-down
+t_spotify_volume_up:
+  alias: T- Spotify Volume Up
+  sequence:
+  - action: media_player.volume_set
+    data:
+      volume_level: '{{ state_attr(''media_player.spotify_tristan_van_tine'', ''volume_level'')
+        | float + 0.05 }}'
+    target:
+      entity_id: media_player.spotify_tristan_van_tine
+  description: Volume up by 5%
+  icon: mdi:volume-plus
+t_spotify_volume_down:
+  alias: T- Spotify Volume Down
+  sequence:
+  - action: media_player.volume_set
+    data:
+      volume_level: '{{ state_attr(''media_player.spotify_tristan_van_tine'', ''volume_level'')
+        | float - 0.05 }}'
+    target:
+      entity_id: media_player.spotify_tristan_van_tine
+  description: Volume down by 5%
+  icon: mdi:volume-minus

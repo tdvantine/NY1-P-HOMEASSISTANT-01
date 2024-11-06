@@ -1,0 +1,164 @@
+config:
+  views:
+  - cards: []
+    sections:
+    - cards:
+      - cards:
+        - alignment: center
+          subtitle_tap_action:
+            action: none
+          title: Sample's Room
+          title_tap_action:
+            action: none
+          type: custom:mushroom-title-card
+        - cards:
+          - card_mod:
+              style: ".state {\n  flex-wrap: wrap !important;\n}\n.state__uom {\n\
+                \  overflow: unset !important;\n}\nha-card {\n  --ha-card-background:\
+                \ #4e4b4b10;\n  }\n"
+            entities:
+            - sensor.sample_enviro_temperature
+            font_size: 80
+            height: 50
+            line_color: var(--accent-color)
+            line_width: 8
+            name: Temp
+            show:
+              icon: false
+            type: custom:mini-graph-card
+          - card_mod:
+              style: ".state {\n  flex-wrap: wrap !important;\n}\n.state__uom {\n\
+                \  overflow: unset !important;\n}\nha-card {\n  --ha-card-background:\
+                \ #4e4b4b10;\n  }\n"
+            entities:
+            - sensor.sample_enviro_humidity
+            font_size: 80
+            height: 50
+            line_color: '#222D66'
+            line_width: 8
+            name: Humidity
+            show:
+              icon: false
+            type: custom:mini-graph-card
+          - card_mod:
+              style: ".state {\n  flex-wrap: wrap !important;\n}\n.state__uom {\n\
+                \  overflow: unset !important;\n}\nha-card {\n  --ha-card-background:\
+                \ #4e4b4b10;\n  }\n"
+            entities:
+            - sensor.sample_enviro_pressure
+            font_size: 80
+            height: 50
+            line_color: '#923172'
+            line_width: 8
+            name: PSI
+            show:
+              icon: false
+            type: custom:mini-graph-card
+          - card_mod:
+              style: ".state {\n  flex-wrap: wrap !important;\n}\n.state__uom {\n\
+                \  overflow: unset !important;\n}\nha-card {\n  --ha-card-background:\
+                \ #4e4b4b10;\n  }\n"
+            entities:
+            - sensor.ny1_p_airsensor_02_2_5_g
+            font_size: 80
+            height: 50
+            line_color: '#800000'
+            line_width: 8
+            name: AQ
+            show:
+              icon: false
+            type: custom:mini-graph-card
+          type: horizontal-stack
+        - alignment: center
+          style: "ha-card {\n  width: 350px !important;\n  height: 200px !important;\n"
+          subtitle_tap_action:
+            action: none
+          title: Tristan's Room
+          title_tap_action:
+            action: none
+          type: custom:mushroom-title-card
+        - cards:
+          - card_mod:
+              style: ".state {\n  flex-wrap: wrap !important;\n}\n.state__uom {\n\
+                \  overflow: unset !important;\n}\nha-card {\n  --ha-card-background:\
+                \ #4e4b4b10;\n  }\n"
+            entities:
+            - sensor.tbr_weather_temperature
+            font_size: 80
+            height: 50
+            line_color: var(--accent-color)
+            line_width: 8
+            name: Temp
+            show:
+              icon: false
+            type: custom:mini-graph-card
+          - card_mod:
+              style: ".state {\n  flex-wrap: wrap !important;\n}\n.state__uom {\n\
+                \  overflow: unset !important;\n}\nha-card {\n  --ha-card-background:\
+                \ #4e4b4b10;\n  }\n"
+            entities:
+            - sensor.tbr_weather_humidity
+            font_size: 80
+            height: 50
+            line_color: '#222D66'
+            line_width: 8
+            name: Humidity
+            show:
+              icon: false
+            type: custom:mini-graph-card
+          - card_mod:
+              style: ".state {\n  flex-wrap: wrap !important;\n}\n.state__uom {\n\
+                \  overflow: unset !important;\n}\nha-card {\n  --ha-card-background:\
+                \ #4e4b4b10;\n  }\n"
+            entities:
+            - sensor.tbr_weather_pressure
+            font_size: 80
+            height: 50
+            line_color: '#923172'
+            line_width: 8
+            name: PSI
+            show:
+              icon: false
+            type: custom:mini-graph-card
+          type: horizontal-stack
+        type: vertical-stack
+      title: House Info
+      type: grid
+    - cards:
+      - card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+        current: true
+        details: true
+        entity: weather.pw_manhattan
+        forecast: true
+        hourly_forecast: false
+        name: MH
+        number_of_forecasts: '5'
+        type: custom:weather-card
+      - card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+        current: true
+        details: true
+        entity: weather.pw_bk
+        forecast: true
+        hourly_forecast: false
+        name: BK
+        number_of_forecasts: '5'
+        type: custom:weather-card
+      - camera_view: auto
+        card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  font-size: 1rem\
+            \ !important\n  }\n"
+        entity: camera.mail_usps_camera_ny1
+        hold_action:
+          action: none
+        name: Mailbox
+        show_name: false
+        show_state: false
+        tap_action:
+          action: none
+        type: picture-entity
+      title: Local Info
+      type: grid
+    title: Home
+    type: sections

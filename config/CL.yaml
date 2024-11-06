@@ -1,0 +1,8 @@
+- sensor:
+    name: label_colors
+    command: !secret todoist_cmd_with_api_token
+    value_template: >
+      {{ value_json.label_colors | length }}
+    json_attributes:
+      - label_colors
+    scan_interval: 200

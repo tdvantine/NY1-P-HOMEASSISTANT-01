@@ -1,0 +1,17 @@
+substitutions:
+  name: ny1_p_m5echo_01
+  friendly_name: NY1-P-M5ECHO-01
+packages:
+  m5stack.atom-echo-voice-assistant: github://esphome/firmware/voice-assistant/m5stack-atom-echo.yaml@main
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+  friendly_name: ${friendly_name}
+api:
+  encryption:
+    key: SFZ9eCffhAoLOqSx27RQyXhxS7Bt+69Cfommb4dEEdc=
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password

@@ -1,0 +1,54 @@
+items:
+- icon: mdi:map
+  id: map
+  mode: storage
+  require_admin: false
+  show_in_sidebar: true
+  title: Map
+  url_path: map
+- icon: mdi:cellphone
+  id: tristan_mobile
+  mode: storage
+  require_admin: false
+  show_in_sidebar: true
+  title: Tristan Mobile
+  url_path: tristan-mobile
+- icon: mdi:tablet-dashboard
+  id: tbr_dashboard
+  mode: storage
+  require_admin: false
+  show_in_sidebar: true
+  title: TBR Dashboard
+  url_path: tbr-dashboard
+- id: dashboard_transfer
+  mode: storage
+  require_admin: false
+  show_in_sidebar: true
+  title: Transfer
+  url_path: dashboard-transfer
+- id: dashboard_templates
+  mode: storage
+  require_admin: false
+  show_in_sidebar: true
+  title: Templates
+  url_path: dashboard-templates
+- icon: mdi:server
+  id: control_center
+  mode: storage
+  require_admin: false
+  show_in_sidebar: true
+  title: Control Center
+  url_path: control-center
+- icon: mdi:speaker
+  id: sample_dashboard
+  mode: storage
+  require_admin: false
+  show_in_sidebar: true
+  title: Sample
+  url_path: sample-dashboard
+- id: dashboard_cocktails
+  mode: storage
+  require_admin: false
+  show_in_sidebar: true
+  title: Cocktails
+  url_path: dashboard-cocktails

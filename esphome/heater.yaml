@@ -1,0 +1,8 @@
+substitutions:
+  device_name: ny1-p-heater-01
+  frontend_name: NY1-P-HEATER-01
+  max_power: "800"
+  max_temp: "70"
+
+packages:
+  device_base: !include Base_Confs/Shelly_1PM_mini_base_switch.yaml

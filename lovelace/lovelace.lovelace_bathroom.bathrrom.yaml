@@ -1,0 +1,304 @@
+config:
+  kiosk_mode:
+    hide_header: true
+    hide_sidebar: true
+  views:
+  - background: center / cover no-repeat url('/local/waves/background.png') fixed
+    badges: []
+    cards:
+    - cards:
+      - card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  }\n"
+        enableModeChange: true
+        entities:
+        - calendar.holidays_in_united_states
+        - calendar.davis_van_tine
+        firstDayOfWeek: 1
+        fullDayEventText: ''
+        hideFinishedEvents: false
+        maxDaysToShow: 5
+        name: Events
+        noEventsForNextDaysText: Nothing Special Scheduled for a While
+        noEventsForTodayText: ' Nothing Special Today'
+        showDate: false
+        showDescription: false
+        showLoader: true
+        showLocation: false
+        showNoEventsForToday: false
+        showProgressBar: true
+        showRelativeTime: false
+        showWeekDay: true
+        type: custom:atomic-calendar-revive
+      - card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  }\n"
+        enableModeChange: true
+        entities:
+        - calendar.meal_plans
+        firstDayOfWeek: 1
+        fullDayEventText: ''
+        hideFinishedEvents: false
+        maxDaysToShow: 3
+        name: Meals
+        noEventsForNextDaysText: Someone hasn't planned meals
+        showDate: false
+        showDescription: true
+        showLoader: true
+        showLocation: false
+        showProgressBar: true
+        showRelativeTime: false
+        showWeekDay: true
+        type: custom:atomic-calendar-revive
+      - card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  }\n"
+        entities:
+        - entity: sensor.fntrgc_travel_time
+        show_header_toggle: false
+        state_color: false
+        type: entities
+      type: vertical-stack
+    - cards:
+      - card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  }\n"
+        current: true
+        details: false
+        entity: weather.pirateweather
+        forecast: true
+        hourly_forecast: false
+        name: Denver
+        number_of_forecasts: '5'
+        type: custom:weather-card
+      - artwork: material
+        card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  }\n"
+        entity: media_player.spotify_2125xccfcnssu6wu6eoxg7uzy
+        group: true
+        name: M - Spotify
+        toggle_power: true
+        type: custom:mini-media-player
+        volume_stateless: true
+        volume_step: '10'
+      - artwork: material
+        card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  }\n"
+        entity: media_player.spotify_tristan_van_tine
+        group: true
+        name: T - Spotify
+        toggle_power: true
+        type: custom:mini-media-player
+        volume_stateless: true
+        volume_step: '10'
+      - card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  }\n"
+        entities:
+        - entities:
+          - entity: sensor.air_filter_pm2_5
+            name: Quality
+          - entity: sensor.air_filter_filter_life
+            name: Filter
+          entity: fan.air_filter
+          icon: mdi:air-purifier
+          name: Air Quality (Indoor)
+          show_state: true
+          toggle: true
+          type: custom:multiple-entity-row
+        type: entities
+      - cards:
+        - card_mod:
+            style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  }\n"
+          icon: mdi:cellphone-nfc
+          icon_height: 20px
+          name: Michael's
+          show_icon: true
+          show_name: true
+          tap_action:
+            action: call-service
+            service: script.find_michaels_phone
+            service_data: {}
+            target: {}
+          type: button
+        - card_mod:
+            style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  }\n"
+          entity: switch.taskmaster_screen_2
+          icon: mdi:tablet
+          icon_height: 20px
+          name: Screen
+          show_icon: true
+          show_name: true
+          type: button
+        - card_mod:
+            style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  }\n"
+          icon: mdi:cellphone-nfc
+          icon_height: 20px
+          name: Tristan's
+          show_icon: true
+          show_name: true
+          tap_action:
+            action: call-service
+            service: script.1646283262397
+            service_data: {}
+            target: {}
+          type: button
+        type: horizontal-stack
+      type: vertical-stack
+    - cards:
+      - card_mod:
+          style:
+            .: "ha-card {\n  font-size: 40px;\n  --ha-card-background: #4e4b4b40;\n\
+              \  text-align: center;\n}\n"
+            ha-markdown$: ''
+        icon: mdi:blank
+        label: "[[[\n  return states['sensor.12h_time'].state;\n]]]\n"
+        show_icon: false
+        show_label: true
+        show_name: false
+        show_state: false
+        styles:
+          card:
+          - height: 50px
+          label:
+          - font-size: 40px
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-matthew/
+        type: custom:button-card
+      - cards:
+        - card_mod:
+            style: "ha-card {\n --ha-card-background: #4e4b4b40;\n  font-size: 1rem\
+              \ !important\n  }\n"
+          entity: ''
+          hold_action:
+            action: none
+          name: Media
+          show_icon: false
+          show_name: true
+          show_state: false
+          tap_action:
+            action: navigate
+            navigation_path: /archface-win/3
+          type: button
+        - card_mod:
+            style: "ha-card {\n --ha-card-background: #4e4b4b40;\n  font-size: 1rem\
+              \ !important\n  }\n"
+          entity: ''
+          hold_action:
+            action: none
+          name: Lights
+          show_icon: false
+          show_name: true
+          show_state: false
+          tap_action:
+            action: navigate
+            navigation_path: /archface-win/1
+          type: button
+        - card_mod:
+            style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  font-size: 1rem\
+              \ !important\n  }\n"
+          entity: ''
+          hold_action:
+            action: navigate
+            navigation_path: /lovelace-stats/0
+          name: Archface
+          show_icon: false
+          show_name: true
+          show_state: false
+          tap_action:
+            action: navigate
+            navigation_path: /archface-win/0
+          type: button
+        - card_mod:
+            style: "ha-card {\n  background-color:\n    {%- set sensor = states('automation.taskmaster_on_0600')\
+              \ %}\n    {%- if sensor == 'on' %}#153c3575\n    {%- else %}#862e2d75\n\
+              \    {%- endif %};\n    font-size: 1rem !important\n"
+          entity: ''
+          hold_action:
+            action: none
+          icon: mdi:monitor-screenshot
+          icon_height: 10px
+          name: Holiday
+          show_icon: false
+          show_name: true
+          show_state: false
+          tap_action:
+            action: call-service
+            data: {}
+            service: script.tm_holiday
+            target: {}
+          type: button
+        type: horizontal-stack
+      - camera_view: auto
+        card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  }\n"
+        entity: camera.mail_usps
+        hold_action:
+          action: none
+        name: Mailbox
+        show_name: false
+        show_state: false
+        tap_action:
+          action: none
+        type: picture-entity
+      - card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  font-size: 1rem\
+            \ !important\n  }\n"
+        entity: climate.hallway
+        name: ' '
+        type: thermostat
+      - cards:
+        - card_mod:
+            style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  font-size: 1rem\
+              \ !important\n  }\n"
+          entity: sensor.recycling
+          name: null
+          show_entity_picture: true
+          show_name: false
+          show_state: false
+          state:
+          - entity_picture: /local/assests/recycling-today.png
+            styles:
+              card: null
+            value: '0'
+          - entity_picture: /local/assests/recycling-tomorrow.png
+            styles:
+              card: null
+            value: '1'
+          - entity_picture: /local/assests/RecyclingLater.png
+            styles:
+              card: null
+            value: '2'
+          type: custom:button-card
+        - card_mod:
+            style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  font-size: 1rem\
+              \ !important\n  }\n"
+          entity: sensor.trash
+          name: null
+          show_entity_picture: true
+          show_name: false
+          show_state: false
+          state:
+          - entity_picture: /local/assests/general_today.png
+            value: '0'
+          - entity_picture: /local/assests/general_tomorrow.png
+            value: '1'
+          - entity_picture: /local/assests/general_off.png
+            value: '2'
+          type: custom:button-card
+        - card_mod:
+            style: "ha-card {\n  --ha-card-background: #4e4b4b40;\n  font-size: 1rem\
+              \ !important\n  }\n"
+          entity: sensor.yardwaste
+          name: null
+          show_entity_picture: true
+          show_name: false
+          show_state: false
+          state:
+          - entity_picture: /local/assests/yard_today.png
+            value: '0'
+          - entity_picture: /local/assests/yard_tomorrow.png
+            value: '1'
+          - entity_picture: /local/assests/yard_off2.png
+            value: '2'
+          type: custom:button-card
+        type: horizontal-stack
+      type: vertical-stack
+    theme: kibibit-dark-cards
+    title: Home

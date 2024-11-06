@@ -1,0 +1,172 @@
+config:
+  header_cards:
+    cards:
+    - chips:
+      - icon: mdi:tablet-dashboard
+        icon_color: accent
+        tap_action:
+          action: navigate
+          navigation_path: /tbr-dashboard/0
+        type: action
+      type: custom:mushroom-chips-card
+  views:
+  - sections:
+    - cards:
+      - heading: Media Playback
+        type: heading
+      - artwork: material
+        card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+        entity: media_player.ny1_p_smartspeaker_01
+        group: true
+        name: null
+        toggle_power: true
+        type: custom:mini-media-player
+        volume_stateless: true
+        volume_step: '10'
+      - artwork: material
+        card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+        entity: media_player.computer
+        group: true
+        toggle_power: true
+        type: custom:mini-media-player
+        volume_stateless: true
+        volume_step: '10'
+      - artwork: material
+        card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+        entity: media_player.office_mini_speaker
+        group: true
+        toggle_power: true
+        type: custom:mini-media-player
+        volume_stateless: true
+        volume_step: '10'
+      - artwork: material
+        card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+        entity: media_player.ny1
+        group: true
+        toggle_power: true
+        type: custom:mini-media-player
+        volume_stateless: true
+        volume_step: '10'
+      type: grid
+    - cards:
+      - heading: Media Sources
+        type: heading
+      - artwork: material
+        card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+        entity: media_player.spotify_tristan_van_tine
+        group: true
+        name: T - Spotify
+        toggle_power: true
+        type: custom:mini-media-player
+        volume_stateless: true
+        volume_step: '10'
+      - artwork: material
+        card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+        entity: media_player.sams_tv
+        group: true
+        toggle_power: true
+        type: custom:mini-media-player
+        volume_stateless: true
+        volume_step: '10'
+      - artwork: material
+        card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+        entity: media_player.wrong_one_dumbass
+        group: true
+        name: Chromecast
+        toggle_power: true
+        type: custom:mini-media-player
+        volume_stateless: true
+        volume_step: '10'
+      type: grid
+    - cards:
+      - heading: LX
+        type: heading
+      - card_layout: normal
+        card_type: separator
+        icon: mdi:bed
+        name: TBR
+        styles: "ha-card {\n  height: 10%;"
+        type: custom:bubble-card
+      - entity: light.tbr_lx
+        layout: horizontal
+        type: custom:mushroom-light-card
+      - collapsible_controls: false
+        entity: light.kaufb_01
+        hold_action:
+          action: more-info
+        icon: mdi:light-recessed
+        name: Overhead
+        show_brightness_control: false
+        show_color_control: false
+        show_color_temp_control: false
+        tap_action:
+          action: toggle
+        type: custom:mushroom-light-card
+        use_light_color: true
+      - collapsible_controls: false
+        entity: light.ny1_p_wled_01
+        hold_action:
+          action: more-info
+        icon: mdi:window-closed
+        name: Window
+        show_brightness_control: false
+        show_color_control: false
+        show_color_temp_control: false
+        tap_action:
+          action: toggle
+        type: custom:mushroom-light-card
+        use_light_color: true
+      - entity: light.rgbw2_01
+        hold_action:
+          action: more-info
+        icon: mdi:bed
+        tap_action:
+          action: toggle
+        type: custom:mushroom-light-card
+        use_light_color: true
+      - entity: light.kauf_rgb_sw_big_light
+        hold_action:
+          action: more-info
+        name: Switch Light
+        tap_action:
+          action: toggle
+        type: custom:mushroom-light-card
+        use_light_color: true
+      - entity: light.closet_light
+        hold_action:
+          action: more-info
+        icon: mdi:wardrobe-outline
+        tap_action:
+          action: toggle
+        type: custom:mushroom-light-card
+        use_light_color: false
+      - entity: switch.taskmaster_screen
+        tap_action:
+          action: toggle
+        type: custom:mushroom-entity-card
+      - card_layout: normal
+        card_type: separator
+        icon: mdi:paper-roll-outline
+        name: Common Bathroom
+        styles: "ha-card {\n  height: 10%;"
+        type: custom:bubble-card
+      - entity: light.common_bathroom_sink_lx
+        hold_action:
+          action: more-info
+        icon: ''
+        layout: horizontal
+        name: Sink Lights
+        tap_action:
+          action: toggle
+        type: custom:mushroom-light-card
+        use_light_color: true
+      type: grid
+    title: Home
+    type: sections

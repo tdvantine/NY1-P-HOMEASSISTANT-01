@@ -1,0 +1,118 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+group: !include groups.yaml
+frontend:
+  themes: !include_dir_merge_named themes
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+mqtt: !include mqtt.yaml
+sensor: !include sensors.yaml
+binary_sensor: !include binary.yaml
+switch: !include switches.yaml
+command_line: !include CL.yaml
+cover: !include covers.yaml
+light: !include lights.yaml
+# input_select: !include input-select.yaml
+
+## ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+## INPUT BOOLEANS
+## ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+input_boolean:
+  weebo_cleaned:
+    name: Weebo Cleaned?
+    icon: mdi:robot_vacuum
+
+## ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+## API
+## ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+spotcast:
+  sp_dc: !secret spotcast_spdc
+  sp_key: !secret spotcast_spkey
+
+## ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+## OTHER
+## ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+anniversaries:
+  sensors:
+    - name: Count Down 1
+      date_template: "{{ states('input_datetime.count_down_1') }}"
+      one_time: true
+      id_prefix: ""
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - !secret trusted_proxies
+  ip_ban_enabled: true
+  login_attempts_threshold: 3
+
+notify:
+  - name: "Phones"
+    platform: group
+    services:
+      - service: mobile_app_tristan_s_s21
+      - service: mobile_app_s8mobile_app_galaxy_watch5_pro_ayrt
+  - name: "Tristan"
+    platform: group
+    services:
+      - service: mobile_app_tristan_s_s21
+      - service: mobile_app_s8mobile_app_galaxy_watch5_pro_ayrt
+      - service: persistent_notification
+
+camera:
+  - platform: local_file
+    file_path: /home/homeassistant/.homeassistant/custom_components/mail_and_packages/mail_none.gif
+    name: mail_usps
+
+zha_toolkit:
+
+# rest_command:
+#   todoist:
+#     method: post
+#     url: "https://api.todoist.com/sync/v9/{{ url }}"
+#     payload: "{{ payload }}"
+#     headers:
+#       Authorization: !secret todoist_api_token
+#     content_type: "application/x-www-form-urlencoded"
+
+climate:
+  - platform: generic_thermostat
+    name: Bedroom Heater
+    heater: switch.heater_power
+    target_sensor: sensor.tbr_weather_temperature
+    min_cycle_duration: 00:05
+    cold_tolerance: 2
+    hot_tolerance: 1
+    min_temp: 65
+    max_temp: 80
+  # - platform: generic_thermostat
+  #   name: Bedroom CS300
+  #   heater: switch.heater_power
+  #   target_sensor: sensor.tbr_weather_temperature
+  #   min_cycle_duration: 00:05
+  #   cold_tolerance: 2
+  #   hot_tolerance: 1
+  #   min_temp: 65
+  #   max_temp: 80
+
+weather:
+  - platform: template
+    name: "TBR"
+    condition_template: "{{ states('weather.pw_bk') }}"
+    temperature_template: "{{ states('sensor.tbr_weather_temperature') | float }}"
+    temperature_unit: "°F"
+    humidity_template: "{{ states('sensor.tbr_weather_humidity') | float }}"
+    forecast_daily_template: "{{ state_attr('weather.my_region', 'forecast_data') }}"
+    pressure_template: "{{ states('sensor.tbr_weather_pressure')  | float }}"
+
+rest_command:
+  todoist:
+    method: post
+    url: "https://api.todoist.com/sync/v9/{{ url }}"
+    payload: "{{ payload }}"
+    headers:
+      Authorization: !secret todoist_api_token2
+    content_type: "application/x-www-form-urlencoded"

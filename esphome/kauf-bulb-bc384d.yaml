@@ -1,0 +1,16 @@
+substitutions:
+  name: ny1-p-kaufb-03
+  friendly_name: KAUFB-03
+packages:
+  Kauf.RGBWW: github://KaufHA/kauf-rgbww-bulbs/kauf-bulb.yaml
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+api:
+  encryption:
+    key: H7ngySd/NDbAOvKcRUjPp1ENyUZOQVSLLmoPq9zc/Tg=
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password

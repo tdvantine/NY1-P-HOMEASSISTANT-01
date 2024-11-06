@@ -1,0 +1,992 @@
+- id: '1718845749751'
+  alias: TBR - Light On Entry
+  description: Turn bedroom light on when motion is detected
+  triggers:
+  - entity_id:
+    - binary_sensor.tristans_bedroom_motion
+    from:
+    to: 'on'
+    trigger: state
+  conditions:
+  - condition: device
+    type: is_off
+    device_id: fe7dd0efbd1af103e82646377c3dcbf9
+    entity_id: 2d2501dee3b5a6f34f461ce1255c2042
+    domain: light
+  - condition: state
+    entity_id: binary_sensor.ny1_p_bed_01_occupancy
+    state: 'off'
+  actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.taskmaster_screen
+  - action: light.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.tbr_lights
+  mode: single
+- id: '1718849463605'
+  alias: Tristan Leaves Home
+  description: ''
+  triggers:
+  - entity_id: person.tristan
+    zone: zone.home
+    event: leave
+    trigger: zone
+  conditions: []
+  actions:
+  - action: mqtt.publish
+    metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: Noti/blinkt
+      payload: rgb,2,0,0,0
+  - action: mqtt.publish
+    metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: Noti/blinkt
+      payload: rgb,3,0,0,0
+  - action: light.turn_off
+    target:
+      entity_id:
+      - light.tbr_lx
+    data: {}
+  - metadata: {}
+    data:
+      hvac_mode: 'off'
+    target:
+      entity_id: climate.bedroom_heater
+    action: climate.set_hvac_mode
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.taskmaster_screen
+  mode: single
+- id: '1718850127538'
+  alias: Night Mode 2300
+  description: Automation ran at 11pm daily to turn off auto lights
+  trigger:
+  - platform: time
+    at: '23:00:00'
+  condition: []
+  action:
+  - service: automation.turn_off
+    metadata: {}
+    data:
+      stop_actions: true
+    target:
+      entity_id: automation.tristan_s_auto_bedroom_light
+  mode: single
+- id: '1718850405045'
+  alias: TBR - Night Light
+  description: ''
+  triggers:
+  - entity_id:
+    - sensor.tristans_bedroom_security_motion
+    from:
+    to: Motion detection
+    enabled: false
+    trigger: state
+  - trigger: state
+    entity_id:
+    - binary_sensor.ny1_p_bed_01_occupancy
+    from: 'on'
+    to: 'off'
+  conditions:
+  - condition: time
+    after: '23:00:00'
+    before: 07:00:00
+    weekday:
+    - sun
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+  - condition: state
+    entity_id: light.kaufsw_lx_group
+    state: 'off'
+  - condition: state
+    entity_id: light.rgbw2_01
+    state: 'off'
+  actions:
+  - metadata: {}
+    target:
+      entity_id: scene.bed_nigth_light
+    action: scene.turn_on
+  - wait_for_trigger:
+    - entity_id:
+      - binary_sensor.ny1_p_bed_01_occupancy
+      from: 'off'
+      to: 'on'
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 5
+      trigger: state
+    continue_on_timeout: false
+  - metadata: {}
+    data:
+      transition: 2
+    target:
+      entity_id:
+      - light.kauf_rgb_sw_big_light
+      - light.rgbw2_01
+    action: light.turn_off
+  mode: single
+- id: '1718940843477'
+  alias: TBR - Bed Light Toggle
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: 7f10ef9a67269f3d0803b8b3507574e3
+    entity_id: dcfe1559d2ecc4e69e5a7bd14bdcf113
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: light.toggle
+    metadata: {}
+    data:
+      transition: 2
+      brightness_pct: 100
+    target:
+      entity_id: light.rgbw2_01
+  mode: single
+- id: '1718941458301'
+  alias: Day Automations On
+  description: Automation ran at 9am daily to turn on auto lights
+  trigger:
+  - platform: time
+    at: 09:00:00
+  condition: []
+  action:
+  - service: automation.turn_on
+    target:
+      entity_id:
+      - automation.tristan_s_auto_bedroom_light
+    data: {}
+  - service: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.taskmaster_screen
+  mode: single
+- id: '1719823530249'
+  alias: Taskmaster Off in Bed
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.ny1_p_bed_01_occupancy
+    from: 'on'
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 20
+  conditions:
+  - condition: state
+    entity_id: light.kaufsw_lx_group
+    state: 'off'
+  - condition: state
+    entity_id: light.rgbw2_01
+    state: 'off'
+  - condition: state
+    entity_id: switch.closet_shelly
+    state: 'off'
+  actions:
+  - data: {}
+    target:
+      entity_id: switch.taskmaster_screen
+    action: switch.turn_off
+  mode: single
+- id: '1719824227768'
+  alias: Tristan Returns Home
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.tristan
+    zone: zone.home
+    event: enter
+  condition: []
+  action:
+  - metadata: {}
+    data: {}
+    target:
+      entity_id: switch.taskmaster_screen
+    action: switch.turn_on
+  - metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: Noti/blinkt
+      payload: 'rgb,2,255,30,0
+
+        '
+    action: mqtt.publish
+  - metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: Noti/blinkt
+      payload: rgb,3,255,30,0
+    action: mqtt.publish
+  mode: single
+- id: '1720778529089'
+  alias: Bathroom LX On Entry
+  description: ''
+  triggers:
+  - entity_id:
+    - binary_sensor.bathroom_door_state
+    from: 'off'
+    to: 'on'
+    trigger: state
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 500
+  conditions:
+  - condition: state
+    entity_id: light.common_bathroom_sink_lx
+    state: 'off'
+  actions:
+  - metadata: {}
+    data:
+      transition: 1
+    target:
+      entity_id: light.common_bathroom_sink_lx
+    action: light.turn_on
+  mode: single
+- id: '1720984526076'
+  alias: Auto Closet Light
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: e1ef8f799c6464a7f9a7dcb9599b9988
+    entity_id: 11a8e9605477ac157621a85dea9258f0
+    domain: binary_sensor
+  condition: []
+  action:
+  - type: turn_on
+    device_id: ff5afa74dd8011736a66c852aa59da29
+    entity_id: dc235f1bbc2db8a1015b71a1dd55f762
+    domain: light
+  - wait_for_trigger:
+    - platform: state
+      entity_id:
+      - binary_sensor.closet_door_is
+      from: 'on'
+      to: 'off'
+  - type: turn_off
+    device_id: ff5afa74dd8011736a66c852aa59da29
+    entity_id: dc235f1bbc2db8a1015b71a1dd55f762
+    domain: light
+  mode: single
+- id: '1721516614520'
+  alias: Automatically update ESPHome Devices
+  description: Automatically update ESPHome Devices at midnight, and notify when they
+    are updated.
+  trigger:
+  - platform: time
+    at: 00:00:00
+    id: update_check
+    enabled: false
+  - platform: state
+    entity_id:
+    - update.heater_firmware
+    - update.ny1_p_m5echo_01_firmware
+    - update.kaufb_01_firmware
+    - update.ny1_p_kaufb_02_firmware
+    - update.ny1_p_kaufb_03_firmware
+    - update.ny1_p_kaufb_04_firmware
+    - update.kauf_rgbsw_5100b7_firmware
+    - update.ny1_p_s1m_02_firmware
+    - update.ny1_p_workbench_01_firmware
+    to: 'off'
+    id: up-to-date
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.esphome_updates_timer
+    id: esphome_timer_updates_finished
+  condition:
+  - condition: state
+    entity_id:
+    - update.heater_firmware
+    - update.ny1_p_m5echo_01_firmware
+    - update.kaufb_01_firmware
+    - update.ny1_p_kaufb_02_firmware
+    - update.ny1_p_kaufb_03_firmware
+    - update.ny1_p_kaufb_04_firmware
+    - update.kauf_rgbsw_5100b7_firmware
+    - update.ny1_p_s1m_02_firmware
+    - update.ny1_p_workbench_01_firmware
+    match: any
+    state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: update_check
+      sequence:
+      - service: timer.start
+        data:
+          duration: 0
+        target:
+          entity_id: timer.esphome_updates_timer
+      - alias: Update all ESPHome devices in sequence
+        repeat:
+          for_each: '{{ states.update | selectattr(''state'', ''eq'', ''on'') | map(attribute=''entity_id'')
+            | select(''in'', integration_entities(''esphome'')) | list }}'
+          sequence:
+          - service: update.install
+            target:
+              entity_id: '{{ repeat.item }}'
+          - wait_template: '{{ is_state(repeat.item, ''off'') }}'
+    - conditions:
+      - condition: trigger
+        id: up-to-date
+      sequence:
+      - service: timer.cancel
+        data: {}
+        target:
+          entity_id: timer.esphome_updates_timer
+  mode: single
+- id: '1721539589167'
+  alias: TBR Button
+  description: ''
+  trigger:
+  - device_id: ffba0346ca1c0bf857e952abaedbf45c
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: remote_button_short_press
+    id: Single
+  - device_id: ffba0346ca1c0bf857e952abaedbf45c
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: remote_button_double_press
+    id: Double
+  - device_id: ffba0346ca1c0bf857e952abaedbf45c
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: remote_button_long_press
+    id: Hold
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - Single
+      sequence:
+      - service: light.turn_off
+        metadata: {}
+        data:
+          transition: 2
+        target:
+          entity_id:
+          - light.ny1_p_wled_01
+          - light.kaufb_01
+          - light.rgbw2_01
+          - light.closet_light
+          - light.kauf_rgb_sw_big_light
+      - service: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.taskmaster_screen
+    - conditions:
+      - condition: trigger
+        id:
+        - Double
+      sequence:
+      - service: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.new_day
+        data: {}
+    - conditions:
+      - condition: trigger
+        id:
+        - Hold
+      sequence:
+      - service: light.turn_on
+        metadata: {}
+        data:
+          transition: 2
+        target:
+          entity_id: light.kaufsw_lx_group
+  mode: single
+- id: '1721697154868'
+  alias: TBR Button - Double Click - Streaming Scene
+  description: ''
+  trigger:
+  - device_id: ffba0346ca1c0bf857e952abaedbf45c
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: remote_button_double_press
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.tbr_streaming
+    data:
+      transition: 5
+  mode: single
+- id: '1722572769268'
+  alias: Security - Front Door Opened While No One Home
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.front_door_opening
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: person.tristan
+    state: not_home
+    enabled: true
+  - condition: state
+    entity_id: sensor.guest_status
+    state: Away
+    enabled: false
+  - condition: state
+    entity_id: person.sample
+    state: not_home
+    enabled: true
+  action:
+  - metadata: {}
+    data:
+      message: Front Door Opened
+      title: '!! Security Alert !! '
+      data:
+        color: orange
+        channel: Alerts
+        importance: high
+    action: notify.mobile_app_tristans_s22
+  - action: notify.mobile_app_samplesphone
+    data:
+      title: '!! Security Alert !! '
+      message: Front Door Opened
+      data:
+        push:
+          interruption-level: critical
+    enabled: false
+  mode: single
+- id: '1722836148688'
+  alias: Voice - Bed Time
+  description: ''
+  trigger:
+  - platform: conversation
+    command:
+    - Bedtime
+  - platform: conversation
+    command: It's bedtime
+  condition: []
+  action:
+  - service: light.turn_on
+    metadata: {}
+    data:
+      transition: 3
+      kelvin: 2391
+      brightness_pct: 25
+    target:
+      entity_id: light.rgbw2_01
+  - service: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.taskmaster_screen
+  - type: turn_off
+    device_id: fe7dd0efbd1af103e82646377c3dcbf9
+    entity_id: 2d2501dee3b5a6f34f461ce1255c2042
+    domain: light
+  - service: light.turn_off
+    metadata: {}
+    data:
+      transition: 3
+    target:
+      entity_id: light.kaufb_01
+  mode: single
+- id: '1723422034835'
+  alias: Workbench Power Button
+  description: ''
+  triggers:
+  - device_id: 370e7a586c6f88715e13b7d4c8a44487
+    domain: zha
+    type: remote_button_short_press
+    subtype: remote_button_short_press
+    id: Single
+    trigger: device
+  - device_id: 370e7a586c6f88715e13b7d4c8a44487
+    domain: zha
+    type: remote_button_double_press
+    subtype: remote_button_double_press
+    trigger: device
+    id: Double
+  - device_id: ffba0346ca1c0bf857e952abaedbf45c
+    domain: zha
+    type: remote_button_long_press
+    subtype: remote_button_long_press
+    id: Hold
+    enabled: false
+    trigger: device
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - Single
+      sequence:
+      - target:
+          device_id: 1ff0d0d707c6d637418a8c1243cfb226
+        data: {}
+        action: switch.toggle
+    - conditions:
+      - condition: trigger
+        id:
+        - Double
+      sequence:
+      - action: button.press
+        target:
+          entity_id: button.ir_test_power_on
+        data: {}
+    - conditions:
+      - condition: trigger
+        id:
+        - Hold
+      sequence:
+      - metadata: {}
+        data:
+          transition: 2
+        target:
+          entity_id: light.kaufsw_lx_group
+        action: light.turn_on
+  mode: single
+- id: '1724275704328'
+  alias: Sample Returns Home
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.sample
+    zone: zone.home
+    event: enter
+  condition: []
+  action:
+  - metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: Noti/blinkt
+      payload: 'rgb,0,0,0,255
+
+        '
+    action: mqtt.publish
+  - metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: Noti/blinkt
+      payload: rgb,1,0,0,255
+    action: mqtt.publish
+  mode: single
+- id: '1724275768222'
+  alias: Sample Leaves Home
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.sample
+    zone: zone.home
+    event: leave
+  condition: []
+  action:
+  - metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: Noti/blinkt
+      payload: 'rgb,0,0,0,0
+
+        '
+    action: mqtt.publish
+  - metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: Noti/blinkt
+      payload: rgb,1,0,0,0
+    action: mqtt.publish
+  mode: single
+- id: '1724275846441'
+  alias: Sam G Returns Home
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.samg
+    zone: zone.home
+    event: enter
+  condition: []
+  action:
+  - metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: Noti/blinkt
+      payload: rgb,4,255,0,150
+    action: mqtt.publish
+  - metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: Noti/blinkt
+      payload: rgb,5,255,0,150
+    action: mqtt.publish
+  mode: single
+- id: '1724275879205'
+  alias: Sam G Leaves Home
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.samg
+    zone: zone.home
+    event: leave
+  condition: []
+  action:
+  - metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: Noti/blinkt
+      payload: rgb,4,0,0,0
+    action: mqtt.publish
+  - metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: Noti/blinkt
+      payload: rgb,5,0,0,0
+    action: mqtt.publish
+  mode: single
+- id: '1724296423056'
+  alias: Noti Status Update on Restart
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.noti_status
+    from: '!!OFFLINE!!'
+    to: Online
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  condition: []
+  action:
+  - if:
+    - condition: state
+      entity_id: person.sample
+      state: home
+    then:
+    - action: mqtt.publish
+      metadata: {}
+      data:
+        qos: 0
+        retain: false
+        topic: Noti/blinkt
+        payload: rgb,0,0,0,255
+    - action: mqtt.publish
+      metadata: {}
+      data:
+        qos: 0
+        retain: false
+        payload: 'rgb,1,0,0,255
+
+          '
+        topic: Noti/blinkt
+  - if:
+    - condition: state
+      entity_id: person.tristan
+      state: home
+    then:
+    - action: mqtt.publish
+      metadata: {}
+      data:
+        qos: 0
+        retain: false
+        topic: Noti/blinkt
+        payload: 'rgb,2,255,30,0
+
+          '
+    - action: mqtt.publish
+      metadata: {}
+      data:
+        qos: 0
+        retain: false
+        payload: rgb,3,255,30,0
+        topic: Noti/blinkt
+  - if:
+    - condition: state
+      entity_id: sensor.guest_status
+      state: home
+    then:
+    - action: mqtt.publish
+      metadata: {}
+      data:
+        qos: 0
+        retain: false
+        topic: Noti/blinkt
+        payload: rgb,6,0,255,0
+    - action: mqtt.publish
+      metadata: {}
+      data:
+        qos: 0
+        retain: false
+        payload: rgb,7,0,255,0
+        topic: Noti/blinkt
+  mode: single
+- id: '1728415655190'
+  alias: Bathroom Sink Lights Auto Off
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.bathroom_door_state
+    from: 'on'
+    to: 'off'
+    for:
+      hours: 1
+      minutes: 15
+      seconds: 0
+  conditions:
+  - condition: state
+    entity_id: light.common_bathroom_sink_lx
+    state: 'on'
+  - condition: state
+    entity_id: binary_sensor.common_bathroom_motion_detection
+    state: 'off'
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    data:
+      transition: 2
+    target:
+      entity_id: light.common_bathroom_sink_lx
+  mode: single
+- id: '1730141776733'
+  alias: AIRCON-01 State for Companion
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - climate.ny1_p_aircon_01
+    from:
+    to: cool
+    id: cool
+  - trigger: state
+    entity_id:
+    - climate.ny1_p_aircon_01
+    from:
+    to: heat
+    id: heat
+  - trigger: state
+    entity_id:
+    - climate.ny1_p_aircon_01
+    from:
+    to: 'off'
+    id: 'off'
+  - trigger: state
+    entity_id:
+    - climate.ny1_p_aircon_01
+    from:
+    to: fan_only
+    id: fan
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - cool
+      sequence:
+      - action: input_select.select_option
+        metadata: {}
+        data:
+          option: Cool
+        target:
+          entity_id: input_select.aircon_01
+    - conditions:
+      - condition: trigger
+        id:
+        - heat
+      sequence:
+      - action: input_select.select_option
+        metadata: {}
+        data:
+          option: Heat
+        target:
+          entity_id: input_select.aircon_01
+    - conditions:
+      - condition: trigger
+        id:
+        - fan
+      sequence:
+      - action: input_select.select_option
+        metadata: {}
+        data:
+          option: Fan
+        target:
+          entity_id: input_select.aircon_01
+    - conditions:
+      - condition: trigger
+        id:
+        - 'off'
+      sequence:
+      - action: input_select.select_option
+        metadata: {}
+        data:
+          option: 'Off'
+        target:
+          entity_id: input_select.aircon_01
+  mode: single
+- id: '1730407002841'
+  alias: Halloween LX
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - action: select.select_option
+    metadata: {}
+    data:
+      option: WLED / DDP
+    target:
+      entity_id:
+      - select.kaufb_01_effect
+      - select.kaufb_04_effect
+      - select.kaufb_03_effect
+  - action: light.turn_on
+    metadata: {}
+    data:
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      brightness_pct: 100
+    target:
+      entity_id:
+      - light.ny1_p_wled_01
+      - light.kaufb_01
+      - light.kaufb_02
+      - light.kaufb_03
+      - light.kaufb_04
+  - action: select.select_option
+    metadata: {}
+    data:
+      option: Halloween 2
+    target:
+      entity_id: select.dig_uno_v3_preset
+  mode: single
+- id: '1730570417969'
+  alias: AIRCON-01 State for Companion3
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - climate.ny1_p_aircon_01
+    from:
+    to: cool
+    id: cool
+  - trigger: state
+    entity_id:
+    - climate.ny1_p_aircon_01
+    from:
+    to: heat
+    id: heat
+  - trigger: state
+    entity_id:
+    - climate.ny1_p_aircon_01
+    from:
+    to: 'off'
+    id: zilch
+  - trigger: state
+    entity_id:
+    - climate.ny1_p_aircon_01
+    from:
+    to: fan_only
+    id: fan
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - cool
+      sequence:
+      - action: input_select.select_option
+        metadata: {}
+        data:
+          option: Cool
+        target:
+          entity_id: input_select.aircon_01
+    - conditions:
+      - condition: trigger
+        id:
+        - heat
+      sequence:
+      - action: input_select.select_option
+        metadata: {}
+        data:
+          option: Heat
+        target:
+          entity_id: input_select.aircon_01
+    - conditions:
+      - condition: trigger
+        id:
+        - fan
+      sequence:
+      - action: input_select.select_option
+        metadata: {}
+        data:
+          option: Fan
+        target:
+          entity_id: input_select.aircon_01
+    - conditions:
+      - condition: trigger
+        id:
+        - zilch
+      sequence:
+      - action: input_select.select_option
+        metadata: {}
+        data:
+          option: Zilch
+        target:
+          entity_id: input_select.aircon_01
+  mode: single
+- id: '1730867679162'
+  alias: Living Room Button
+  description: ''
+  use_blueprint:
+    path: V1d1o7/E1812.yaml
+    input:
+      kaufb: light.kaufb_05
+      last_state_input: input_text.lr_button_last_state
+      e1812: 2c5744837baf5cdd5352636b4bba8ea5

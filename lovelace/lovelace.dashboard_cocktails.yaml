@@ -1,0 +1,75 @@
+config:
+  views:
+  - cards:
+    - content: '1.5oz Midori
+
+        1.5oz Triple Sec
+
+        1oz Lemon
+
+
+        Stired'
+      title: Witch's Brew
+      type: markdown
+    - content: '1.5oz Appleton
+
+        1.5oz Ron Barrilito
+
+        1oz Lemon Hart
+
+        .75oz Zombie Mix
+
+        .5oz Donn''s
+
+        .75oz Lime
+
+        1 Dash Angostura'
+      title: Zombie
+      type: markdown
+    - content: 'Cinnamon Sugar Rim
+
+
+        2oz Cider
+
+        2Tbsp Apple Butter
+
+        2oz Bourbon
+
+        2 Dash Orange Bitters'
+      title: Apple Butter OF
+      type: markdown
+    - content: '4oz Cider (HOT)
+
+        1oz BS Syrup
+
+        2 Dashes Bitters
+
+        1.5oz Rum or 1oz Bourbon
+
+        Cinnamon and Nutmeg to top'
+      title: Hot Cider
+      type: markdown
+    - content: 'Cinnamon Sugar Rim
+
+
+
+        1.5oz Spiced Rum
+
+        1oz Triple Sec
+
+        1oz Lemon
+
+        .5oz Simple
+
+
+        Shaken'
+      title: Cable Car
+      type: markdown
+    - content: "40ml Black Seal Rum\n40ml Gold Rum\n50ml PJ\n50ml OJ\n20ml (.75oz)\
+        \ Grenadine\n6 dashs Ango\n\nInto a pitcher \u2153 full of crushed ice add\
+        \ Goslings Black Seal Rum, Goslings Gold Rum, pineapple juice, orange juice,\
+        \ Grenadine or Bermuda Falernum and Angostura bitters. Churn vigorously until\
+        \ a frothing appears or mix in a cocktail shaker. Strain into a martini glass."
+      title: Rum Swizzle
+      type: markdown
+    title: Home

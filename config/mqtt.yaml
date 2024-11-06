@@ -1,0 +1,11 @@
+# # "Guest_Keys"
+#   state_topic: "espresense/devices/iBeacon:426c7565-4368-6172-6d42-6561636f6e73-3838-4949/ny1"
+#     name: "Guest"
+#     device_id: "iBeacon:426c7565-4368-6172-6d42-6561636f6e73-3838-4949"
+#     timeout: 20
+#     away_timeout: 360
+
+sensor:
+  - name: "Guest"
+    state_topic: "espresense/devices/iBeacon:426c7565-4368-6172-6d42-6561636f6e73-3838-4949"
+    unique_id: "guest_keys_tracker"

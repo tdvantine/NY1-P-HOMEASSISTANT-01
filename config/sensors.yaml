@@ -1,0 +1,114 @@
+## ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+## TEMPLATED ENTITIES
+## ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- platform: template # Trash Collection Sensor
+  sensors:
+    trash:
+      friendly_name: Days Until Trash Pickup
+      unique_id: IXECVqliO6mW
+      icon_template: mdi:delete-restore
+      value_template: >-
+        {{ min(((state_attr('calendar.trash_collection','start_time') | as_timestamp - today_at('00:00') | as_timestamp) / 86400) | int,2) }}
+      attribute_templates:
+        days: >-
+          {{ ((state_attr('calendar.trash_collection','start_time') | as_timestamp - today_at('00:00') | as_timestamp) / 86400) | int}}
+
+- platform: template # Recycling Collection Sensor
+  sensors:
+    recycling:
+      friendly_name: Days Until Recycling Pickup
+      unique_id: fPJF6aCVFkxy
+      icon_template: mdi:recycle-variant
+      value_template: >-
+        {{ min(((state_attr('calendar.recycling_collection','start_time') | as_timestamp - today_at('00:00') | as_timestamp) / 86400) | int,2) }}
+      attribute_templates:
+        days: >-
+          {{ ((state_attr('calendar.recycling_collection','start_time') | as_timestamp - today_at('00:00') | as_timestamp) / 86400) | int}}
+
+- platform: template # "24H Time and date"
+  sensors:
+    time_formatted:
+      friendly_name: "24H Time"
+      value_template: "{{ now().timestamp() | timestamp_custom('%a %b %d, %H:%M') }}"
+      icon_template: mdi:calendar-clock
+
+- platform: template # "24H Time"
+  sensors:
+    24h_time:
+      friendly_name: "24H Time Only"
+      value_template: "{{ now().timestamp() | timestamp_custom('%H%M') }}"
+      icon_template: mdi:clock
+# - platform: template # Bed Sensor State Correction
+#   sensors:
+#     bed_state:
+#       unique_id: hrERctRialZk
+#       value_template: >-
+#         {% if is_state('binary_sensor.bed_sensor_2_opening', 'on') -%}
+#         unoccupied
+#         {% elif is_state('binary_sensor.bed_sensor_2_opening', 'off') -%}
+#         occupied
+#         {%- else -%}
+#         err
+#         {%- endif %}
+
+# - platform: template # Bed Sensor TF Correction
+#   sensors:
+#     bed_tf:
+#       unique_id: XTXG6bF2TlMu
+#       value_template: >-
+#         {% if is_state('binary_sensor.bed_sensor_2_opening', 'on') -%}
+#         False
+#         {% elif is_state('binary_sensor.bed_sensor_2_opening', 'off') -%}
+#         True
+#         {%- else -%}
+#         err
+#         {%- endif %}
+
+# - platform: worldclock # WC for London TZ
+#   name: LondonTZ
+#   time_zone: Europe/London
+
+# - platform: worldclock # WC for Italy TZ
+#   name: ItalyTZ
+#   time_zone: Europe/Madrid
+
+## ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+## MQTT ENTITIES
+## ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- platform: mqtt_room # "Guest Keys Discovery"
+  name: "Guest_Keys"
+  device_id: iBeacon:426c7565-4368-6172-6d42-6561636f6e78-3838-1341
+  state_topic: espresense/devices/iBeacon:426c7565-4368-6172-6d42-6561636f6e78-3838-1341
+  timeout: 20
+  away_timeout: 240
+
+- platform: template # Guest Home
+  sensors:
+    guest_status:
+      friendly_name: Guest Status
+      value_template: "{% if is_state('sensor.guest_keys', 'ny1') %}Home{% else %}Away{% endif %}"
+
+- platform: template # Noti Status
+  sensors:
+    noti_status:
+      friendly_name: Noti Status
+      value_template: "{% if is_state('binary_sensor.noti_status_ping', 'on') %}Online{% else %}!!OFFLINE!!{% endif %}"
+
+- name: Reminders
+  platform: rest
+  method: GET
+  resource: "https://api.todoist.com/sync/v9/projects/get_data"
+  params:
+    project_id: 2340784630
+  headers:
+    Authorization: !secret todoist_api_token2
+  value_template: "{{ value_json['project']['id'] }}"
+  json_attributes:
+    - project
+    - items
+    - sections
+    - project_notes
+  scan_interval: 30
+
+

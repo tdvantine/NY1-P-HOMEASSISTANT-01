@@ -1,0 +1,103 @@
+blueprint:
+  name: E1812 Ikea Button and Kauf Bulbs using ZHA
+  description: Blueprint to use a Ikea Tradfri Shortcut Button to control a Kauf bulb using ZHA and Adaptive Ligthing
+  domain: automation
+  author: V1d1o7
+  homeassistant:
+    min_version: 2024.6.0
+  input:
+    kaufb:
+      name: Kauf Bulb Light Entity
+      description: Kauf Bulb Ligth Entity to control
+      selector:
+        entity:
+          domain:
+          - light
+          multiple: false
+    last_state_input:
+      name: Last State Input Text
+      description: Input text entity to store the last button state
+      selector:
+        entity:
+          domain:
+          - input_text
+          multiple: false
+    e1812:
+      name: Device ID of Ikea Button
+      description: Kauf Bulb Ligth Entity to control
+      selector:
+        device:
+
+          multiple: false
+
+
+triggers:
+  - event_type: zha_event
+    event_data:
+      device_id: !input e1812
+    trigger: event
+actions:
+  - target:
+      entity_id: !input last_state_input
+    data:
+      value: "{{ trigger.event.data.command }}"
+    action: input_text.set_value
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 300
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.command == \"on\" }}"
+        sequence:
+          - action: light.toggle
+            metadata: {}
+            data: {}
+            target:
+              entity_id: !input kaufb
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.command == \"off\" }}"
+        sequence:
+          - action: adaptive_lighting.apply
+            data:
+              lights:
+                - !input kaufb
+          - action: adaptive_lighting.set_manual_control
+            metadata: {}
+            data:
+              manual_control: false
+              lights:
+                - !input kaufb
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.event.data.command == \"move_with_on_off\" }}"
+        sequence:
+          - repeat:
+              sequence:
+                - action: light.turn_on
+                  metadata: {}
+                  data:
+                    brightness_step_pct: 5
+                  target:
+                    entity_id: !input kaufb
+                - delay:
+                    hours: 0
+                    minutes: 0
+                    seconds: 0
+                    milliseconds: 400
+              while:
+                - condition: state
+                  entity_id: !input last_state_input
+                  state: move_with_on_off
+            enabled: true
+          - action: adaptive_lighting.set_manual_control
+            metadata: {}
+            data:
+              manual_control: true
+              lights:
+                - !input kaufb
+mode: parallel
+max: 2

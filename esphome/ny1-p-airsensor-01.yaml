@@ -1,0 +1,80 @@
+substitutions:
+  name: NY1-P-AIRSENSOR-01  ## Location & Entity Names (Capitals and Spaces Allowed)
+  ap_id: PM Fan  ## Entity ID for the Fan (E.G. IKEA Air Filter)
+  auto_enable: ny1_p_airsensor_01.  ## Home Assistant Entity to Enable Automation
+  af_speeds: '6'   ## Fan Speeds [MUST BE IN QUOTES]
+  pms_low: '40'    ## 2.5µm Count for Fan Off [MUST BE IN QUOTES]
+  pms_high: '200'  ## 2.5µm Count for Fan MAX [MUST BE IN QUOTES]
+
+esphome:
+  name: ny1-p-airsensor-01
+  platform: ESP8266
+  board: d1_mini
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+api:
+  encryption:
+    key: "T5HSnHHK4HnIdYSdtWaH9D20x7vRL6g00wLygvFXCSE="
+
+ota:
+  platform: esphome
+  password: !secret ota_password
+logger:
+  logs:
+    sensor: none
+    binary_sensor: none
+    homeassistant.binary_sensor: none
+    pm1006: none
+
+## Serial Port for the IKEA Sensor
+uart:
+  - rx_pin: D7
+    # tx_pin: D8
+    baud_rate: 9600
+
+binary_sensor:
+  ## Reads On/Off State from HA
+  - platform: homeassistant
+    entity_id: $auto_enable
+    id: enable_automation
+  
+  ## Use the on-board LED to show "Fan Running"
+  - platform: gpio
+    name: $name Fan
+    id: fan
+    pin:
+      number: D2
+      inverted: true
+
+  
+
+sensor:
+  ## IKEA PMS 2.5µg Sensor
+  - platform: pm1006
+    id: aq_sensor
+    pm_2_5:
+      name: $name 2.5µg
+      on_value:
+        - if:
+            condition:
+              - binary_sensor.is_off: enable_automation
+            then:
+              - homeassistant.service:
+                  service: number.set_value
+                  data:
+                    entity_id: $ap_id
+                    value: !lambda |-
+                      auto range = (x - $pms_low) / ($pms_high - $pms_low) * $af_speeds;
+                      auto value = (x < $pms_low) ? 0 : (range > $af_speeds) ? $af_speeds : range;
+                      return ceil(value);
+            else:
+              # If the "$auto_enable" binary sensor is on, set the fan speed to 0
+              - homeassistant.service:
+                  service: number.set_value
+                  data:
+                    entity_id: $ap_id
+                    value: '0'
+  ## The IKEA Light Level Sensor

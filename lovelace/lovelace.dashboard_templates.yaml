@@ -1,0 +1,1034 @@
+config:
+  header_cards:
+    badges:
+    - entity: sensor.londontz
+      name: LHR
+    - entity: sensor.italytz
+      name: MAD
+  views:
+  - cards:
+    - cards:
+      - button_action:
+          tap_action:
+            action: more-info
+        button_type: state
+        card_type: pop-up
+        entity: light.tbr_bed_red
+        hash: '#tbrrgb'
+        icon: mdi:led-strip
+        name: Bed Lights
+        type: custom:bubble-card
+      - button_action:
+          tap_action:
+            action: more-info
+        button_type: state
+        card_type: pop-up
+        entity: light.tbr_bed_green
+        hash: '#tbrrgb'
+        icon: mdi:led-strip
+        name: Bed Light Green
+        type: custom:bubble-card
+      type: vertical-stack
+    - cards:
+      - cards:
+        - cards:
+          - card_mod:
+              style: ":host {\n  --card-mod-icon-color: #fffba0;\n  }\n"
+            entity: light.kauf_rgb_sw_small_light
+            icon: mdi:bed-double-outline
+            name: Bed BW
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.tbr_bed_light_warm_bright
+            type: button
+          - card_mod:
+              style: ":host {\n  --card-mod-icon-color: #e9f6ef;\n  }\n"
+            entity: light.kauf_rgb_sw_small_light
+            icon: mdi:bed-double-outline
+            name: Bed BC
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              data: {}
+              service: scene.turn_on
+              target:
+                entity_id: scene.tbr_bed_light_cool_bright
+            type: button
+          - card_mod:
+              style: ":host {\n  --card-mod-icon-color: #fffba090;\n  }\n"
+            entity: light.kauf_rgb_sw_small_light
+            icon: mdi:bed-double-outline
+            name: Bed DW
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              data: {}
+              service: scene.turn_on
+              target:
+                entity_id: scene.tbr_bed_light_warm_dim
+            type: button
+          - cards:
+            - entity: light.bed_lights
+              name: Bed Lights
+              show_icon: true
+              show_name: true
+              tap_action:
+                action: toggle
+              type: button
+            - cards:
+              - card_mod:
+                  style: "ha-card {\n  color: red;\n}\n"
+                entity: light.tbr_bed_red
+                hold_action:
+                  action: toggle
+                name: R
+                show_icon: false
+                show_name: true
+                tap_action:
+                  action: more-info
+                type: button
+              - card_mod:
+                  style: "ha-card {\n  color: green;\n}\n"
+                entity: light.tbr_bed_green
+                hold_action:
+                  action: toggle
+                name: G
+                show_icon: false
+                show_name: true
+                tap_action:
+                  action: more-info
+                type: button
+              - card_mod:
+                  style: "ha-card {\n  color: blue;\n}\n"
+                entity: light.tbr_bed_blue
+                hold_action:
+                  action: toggle
+                name: B
+                show_icon: false
+                show_name: true
+                tap_action:
+                  action: more-info
+                type: button
+              type: horizontal-stack
+            type: vertical-stack
+          type: horizontal-stack
+        type: horizontal-stack
+      - cards:
+        - cards:
+          - card_mod:
+              style: ":host {\n  --card-mod-icon-color: #fffba0;\n  }\n"
+            entity: scene.window_bw
+            icon: mdi:window-closed
+            name: Window BW
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.window_bw
+            type: button
+          - card_mod:
+              style: ":host {\n  --card-mod-icon-color: #e9f6ef;\n  }\n"
+            entity: scene.window_dw_duplicate
+            icon: mdi:window-closed
+            name: Window BC
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              data: {}
+              service: scene.turn_on
+              target:
+                entity_id: scene.window_dw_duplicate
+            type: button
+          - card_mod:
+              style: ":host {\n  --card-mod-icon-color: #fffba090;\n  }\n"
+            entity: scene.window_dw
+            icon: mdi:window-closed
+            name: Window DW
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              data: {}
+              service: scene.turn_on
+              target:
+                entity_id: scene.window_dw
+            type: button
+          - entity: scene.window_dw
+            icon: mdi:window-closed
+            name: Window Off
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              service: light.turn_off
+              target:
+                entity_id: light.ny1_p_wled_01
+            type: button
+          type: horizontal-stack
+        type: horizontal-stack
+      - cards:
+        - entity: switch.kauf_rgb_sw
+          icon_height: 20px
+          show_icon: true
+          show_name: true
+          tap_action:
+            action: toggle
+          type: button
+        - entity: light.ny1_p_wled_01
+          icon_height: 20px
+          name: Window Light
+          show_icon: true
+          show_name: true
+          tap_action:
+            action: toggle
+          type: button
+        type: horizontal-stack
+      type: vertical-stack
+    - button_action:
+        tap_action:
+          action: navigate
+          navigation_path: '#energy'
+      button_type: state
+      card_layout: large-2-rows
+      card_type: button
+      entity: sensor.tbr_weather_temperature
+      icon: mdi:weather-cloudy
+      name: TBR Enviroment
+      scrolling_effect: false
+      show_state: true
+      sub_button:
+      - entity: sensor.tbr_weather_humidity
+        icon: mdi:water-percent
+        show_background: false
+        show_state: true
+        tap_action:
+          action: more-info
+      - entity: sensor.tbr_weather_pressure
+        show_background: false
+        show_state: true
+      - entity: sensor.ny1_p_airsensor_01
+        show_background: false
+        show_state: true
+      - entity: sensor.tbr_weather_battery
+        show_background: false
+        show_state: true
+      type: custom:bubble-card
+    - button_action:
+        double_tap_action:
+          action: none
+        hold_action:
+          action: none
+        tap_action:
+          action: more-info
+      button_type: state
+      card_layout: normal
+      card_type: button
+      double_tap_action:
+        action: none
+      entity: sensor.surgas
+      force_icon: false
+      hold_action:
+        action: none
+      name: Surgas
+      scrolling_effect: false
+      show_attribute: false
+      show_icon: false
+      show_last_changed: false
+      show_last_updated: true
+      show_name: true
+      show_state: true
+      styles: ''
+      sub_button:
+      - attribute: brightness
+        icon: ''
+        show_attribute: false
+        show_background: false
+        show_icon: false
+        show_name: false
+        show_state: false
+      tap_action:
+        action: more-info
+      type: custom:bubble-card
+    - cards:
+      - cards:
+        - attribute: brightness
+          button_action:
+            tap_action:
+              action: toggle
+              service: scene.turn_on
+              target:
+                entity_id: scene.window_bw
+          button_type: switch
+          card_layout: large
+          card_type: button
+          double_tap_action:
+            action: more-info
+          entity: light.ny1_p_wled_01
+          force_icon: true
+          hold_action:
+            action: more-info
+          icon: mdi:window-closed
+          name: Window Light
+          scrolling_effect: true
+          show_attribute: true
+          show_icon: true
+          show_last_changed: false
+          show_last_updated: true
+          show_name: true
+          show_state: false
+          sub_button:
+          - entity: scene.window_bw
+            icon: ''
+            name: Window BW
+            show_attribute: false
+            show_background: true
+            show_icon: false
+            show_name: true
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.window_bw
+          - entity: scene.window_bw
+            name: Window BC
+            show_icon: false
+            show_name: true
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.window_bc
+          - entity: scene.window_dw
+            name: Window DW
+            show_icon: false
+            show_name: true
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.window_dw
+          tap_action:
+            action: toggle
+            service: scene.turn_on
+            target:
+              entity_id: scene.window_bw
+          type: custom:bubble-card
+        type: horizontal-stack
+      - cards:
+        - attribute: brightness
+          button_action:
+            tap_action:
+              action: toggle
+              service: scene.turn_on
+              target:
+                entity_id: scene.window_bw
+          button_type: switch
+          card_layout: large
+          card_type: button
+          double_tap_action:
+            action: more-info
+          entity: light.bed_lights
+          force_icon: true
+          hold_action:
+            action: more-info
+          icon: mdi:bed
+          name: Bed Light
+          scrolling_effect: true
+          show_attribute: true
+          show_icon: true
+          show_last_changed: false
+          show_last_updated: true
+          show_name: true
+          show_state: false
+          sub_button:
+          - entity: scene.tbr_bed_light_warm_bright
+            icon: ''
+            name: Bed BW
+            show_attribute: false
+            show_background: true
+            show_icon: false
+            show_name: true
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.tbr_bed_light_warm_bright
+          - entity: scene.tbr_bed_light_cool_bright
+            name: Bed BC
+            show_icon: false
+            show_name: true
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.tbr_bed_light_cool_bright
+          - entity: scene.tbr_bed_light_warm_dim
+            name: Bed DW
+            show_icon: false
+            show_name: true
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.tbr_bed_light_warm_dim
+          tap_action:
+            action: navigate
+            navigation_path: '#tbrrgb'
+            service: scene.turn_on
+            target:
+              entity_id: scene.window_bw
+          type: custom:bubble-card
+        type: horizontal-stack
+      - cards:
+        - attribute: brightness
+          button_action:
+            tap_action:
+              action: toggle
+              service: scene.turn_on
+              target:
+                entity_id: scene.window_bw
+          button_type: switch
+          card_layout: large
+          card_type: button
+          double_tap_action:
+            action: more-info
+          entity: light.bed_lights
+          force_icon: true
+          hold_action:
+            action: more-info
+          icon: mdi:home-account
+          name: Room Light
+          scrolling_effect: true
+          show_attribute: true
+          show_icon: true
+          show_last_changed: false
+          show_last_updated: true
+          show_name: true
+          show_state: false
+          sub_button:
+          - entity: scene.tbr_bed_light_warm_bright
+            icon: ''
+            name: Bed BW
+            show_attribute: false
+            show_background: true
+            show_icon: false
+            show_name: true
+            show_state: false
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.tbr_bed_light_warm_bright
+          - entity: scene.tbr_bed_light_cool_bright
+            name: Bed BC
+            show_icon: false
+            show_name: true
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.tbr_bed_light_cool_bright
+          - entity: scene.tbr_bed_light_warm_dim
+            name: Bed DW
+            show_icon: false
+            show_name: true
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.tbr_bed_light_warm_dim
+          tap_action:
+            action: navigate
+            navigation_path: '#tbrrgb'
+            service: scene.turn_on
+            target:
+              entity_id: scene.window_bw
+          type: custom:bubble-card
+        type: horizontal-stack
+      type: vertical-stack
+    - cards:
+      - cards:
+        - cards:
+          - card_mod:
+              style: ":host {\n  --card-mod-icon-color: #fffba0;\n  }\n"
+            entity: light.kauf_rgb_sw_small_light
+            icon: mdi:bed-double-outline
+            name: Bed BW
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.tbr_bed_light_warm_bright
+            type: button
+          - card_mod:
+              style: ":host {\n  --card-mod-icon-color: #e9f6ef;\n  }\n"
+            entity: light.kauf_rgb_sw_small_light
+            icon: mdi:bed-double-outline
+            name: Bed BC
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              data: {}
+              service: scene.turn_on
+              target:
+                entity_id: scene.tbr_bed_light_cool_bright
+            type: button
+          - card_mod:
+              style: ":host {\n  --card-mod-icon-color: #fffba090;\n  }\n"
+            entity: light.kauf_rgb_sw_small_light
+            icon: mdi:bed-double-outline
+            name: Bed DW
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              data: {}
+              service: scene.turn_on
+              target:
+                entity_id: scene.tbr_bed_light_warm_dim
+            type: button
+          - cards:
+            - entity: light.bed_lights
+              name: Bed Lights
+              show_icon: true
+              show_name: true
+              tap_action:
+                action: toggle
+              type: button
+            - cards:
+              - card_mod:
+                  style: "ha-card {\n  color: red;\n}\n"
+                entity: light.tbr_bed_red
+                hold_action:
+                  action: toggle
+                name: R
+                show_icon: false
+                show_name: true
+                tap_action:
+                  action: more-info
+                type: button
+              - card_mod:
+                  style: "ha-card {\n  color: green;\n}\n"
+                entity: light.tbr_bed_green
+                hold_action:
+                  action: toggle
+                name: G
+                show_icon: false
+                show_name: true
+                tap_action:
+                  action: more-info
+                type: button
+              - card_mod:
+                  style: "ha-card {\n  color: blue;\n}\n"
+                entity: light.tbr_bed_blue
+                hold_action:
+                  action: toggle
+                name: B
+                show_icon: false
+                show_name: true
+                tap_action:
+                  action: more-info
+                type: button
+              type: horizontal-stack
+            type: vertical-stack
+          type: horizontal-stack
+        type: horizontal-stack
+      - cards:
+        - cards:
+          - card_mod:
+              style: ":host {\n  --card-mod-icon-color: #fffba0;\n  }\n"
+            entity: scene.window_bw
+            icon: mdi:window-closed
+            name: Window BW
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.window_bw
+            type: button
+          - card_mod:
+              style: ":host {\n  --card-mod-icon-color: #e9f6ef;\n  }\n"
+            entity: scene.window_dw_duplicate
+            icon: mdi:window-closed
+            name: Window BC
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              data: {}
+              service: scene.turn_on
+              target:
+                entity_id: scene.window_dw_duplicate
+            type: button
+          - card_mod:
+              style: ":host {\n  --card-mod-icon-color: #fffba090;\n  }\n"
+            entity: scene.window_dw
+            icon: mdi:window-closed
+            name: Window DW
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              data: {}
+              service: scene.turn_on
+              target:
+                entity_id: scene.window_dw
+            type: button
+          - entity: scene.window_dw
+            icon: mdi:window-closed
+            name: Window Off
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: call-service
+              service: light.turn_off
+              target:
+                entity_id: light.ny1_p_wled_01
+            type: button
+          type: horizontal-stack
+        type: horizontal-stack
+      - cards:
+        - entity: switch.kauf_rgb_sw
+          icon_height: 20px
+          show_icon: true
+          show_name: true
+          tap_action:
+            action: toggle
+          type: button
+        - entity: light.ny1_p_wled_01
+          icon_height: 20px
+          name: Window Light
+          show_icon: true
+          show_name: true
+          tap_action:
+            action: toggle
+          type: button
+        type: horizontal-stack
+      type: vertical-stack
+    - chips:
+      - entity: sensor.ny1_p_tbrtab_01_battery_level
+        type: entity
+      - entity: sensor.tbr_weather_temperature
+        type: entity
+      - card_mod:
+          style: "ha-card {\nbackground: none;\n{% if states('sensor.ny1_p_airsensor_01')\
+            \ | int < 36 %}\n  --chip-background: #449F3575;\n  --card-mod-icon-color:\
+            \ white;\n{% elif states('sensor.ny1_p_airsensor_01') | int < 86 %}\n\
+            \  --chip-background: #ffbf0075;\n  --card-mod-icon-color: black;\n{%\
+            \ elif states('sensor.ny1_p_airsensor_01') | int > 85 %}\n  --chip-background:\
+            \ #B53D3F75;\n  --card-mod-icon-color: black;\n{% endif %}\n}\n"
+        entity: sensor.ny1_p_airsensor_01
+        type: entity
+      - content_info: name
+        entity: switch.taskmaster_screen
+        icon: mdi:fullscreen
+        name: Screen
+        tap_action:
+          action: call-service
+          service: switch.toggle
+          target:
+            entity_id: switch.taskmaster_screen
+        type: entity
+      type: custom:mushroom-chips-card
+    - entity: light.rgbw2_01
+      type: light
+    - card_mod:
+        style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+      entities:
+      - sensor.surgas
+      font_size: 80
+      line_color: '#138E03'
+      line_width: 8
+      name: Surgas
+      show:
+        icon: false
+      type: custom:mini-graph-card
+    - cards:
+      - card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+        current: true
+        details: true
+        entity: weather.pw_bk
+        forecast: true
+        hourly_forecast: false
+        name: BK
+        number_of_forecasts: '5'
+        type: custom:weather-card
+      - artwork: material
+        card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+        entity: media_player.spotify_tristan_van_tine
+        group: true
+        name: T - Spotify
+        toggle_power: true
+        type: custom:mini-media-player
+        volume_stateless: true
+        volume_step: '10'
+      - attribute: current_temperature
+        button_action:
+          tap_action:
+            action: toggle
+        button_type: switch
+        card_layout: normal
+        card_type: button
+        entity: climate.bedroom_heater
+        force_icon: true
+        icon: mdi:radiator
+        scrolling_effect: false
+        show_attribute: true
+        show_icon: true
+        show_last_changed: false
+        show_last_updated: false
+        show_name: true
+        show_state: true
+        sub_button:
+        - attribute: brightness
+          entity: climate.bedroom_heater
+          icon: ''
+          show_attribute: true
+          show_background: false
+          show_icon: false
+          show_name: false
+          show_state: false
+        tap_action:
+          action: more-info
+        type: custom:bubble-card
+      - attribute: current_temperature
+        button_action:
+          tap_action:
+            action: toggle
+        button_type: switch
+        card_layout: normal
+        card_type: button
+        entity: climate.ny1_p_aircon_01
+        force_icon: true
+        icon: mdi:hvac
+        name: AIRCON-01
+        scrolling_effect: false
+        show_attribute: true
+        show_icon: true
+        show_last_changed: false
+        show_last_updated: false
+        show_name: true
+        show_state: false
+        sub_button:
+        - attribute: brightness
+          entity: climate.ny1_p_aircon_01
+          icon: mdi:plus-circle-outline
+          name: Increase
+          show_arrow: false
+          show_attribute: true
+          show_background: false
+          show_icon: true
+          show_last_changed: false
+          show_name: false
+          show_state: false
+          state_background: true
+          tap_action:
+            action: call-service
+            service: script.increase_ny1_p_aircon_01_temp_by_1
+            target: {}
+        - entity: climate.ny1_p_aircon_01
+          name: Mode
+          select_attribute: hvac_modes
+          show_arrow: false
+          show_background: false
+          show_icon: true
+          show_state: false
+        - attribute: temperature
+          entity: sensor.tbr_temp_rounded
+          name: Set Temp
+          show_attribute: false
+          show_background: false
+          show_icon: false
+          show_state: true
+          state_background: true
+          tap_action:
+            action: none
+        - entity: climate.ny1_p_aircon_01
+          force_icon: true
+          icon: mdi:air-humidifier
+          name: Fan Modes
+          select_attribute: fan_modes
+          show_arrow: false
+          show_background: false
+          show_icon: true
+        - entity: climate.ny1_p_aircon_01
+          icon: mdi:minus-circle-outline
+          name: Decrease
+          show_background: false
+          show_icon: true
+          tap_action:
+            action: call-service
+            service: script.decrease_ny1_p_aircon_01_temp_by_1
+            target: {}
+        - attribute: temperature
+          entity: climate.ny1_p_aircon_01
+          name: Swing Modes
+          select_attribute: swing_modes
+          show_arrow: false
+          show_attribute: false
+          show_background: false
+          show_state: false
+        tap_action:
+          action: more-info
+        type: custom:bubble-card
+      - card_layout: normal
+        card_type: separator
+        name: TBR
+        styles: "* { \n  font-size: 20px !important;\n}"
+        type: custom:bubble-card
+      - cards:
+        - card_mod:
+            style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+          entities:
+          - sensor.tbr_weather_temperature
+          font_size: 80
+          line_color: var(--accent-color)
+          line_width: 8
+          name: ' '
+          show:
+            icon: false
+            name: false
+          type: custom:mini-graph-card
+        - card_mod:
+            style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+          entities:
+          - sensor.tbr_weather_humidity
+          font_size: 80
+          line_color: '#222D66'
+          line_width: 8
+          name: ' '
+          show:
+            icon: false
+            name: false
+          type: custom:mini-graph-card
+        - card_mod:
+            style: "\nha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+          entities:
+          - sensor.tbr_c300s_pm2_5
+          font_size: 80
+          line_color: '#923172'
+          line_width: 8
+          name: ' '
+          show:
+            icon: false
+            name: false
+          type: custom:mini-graph-card
+        type: horizontal-stack
+      - card_layout: normal
+        card_type: separator
+        name: Outside
+        styles: "* { \n  font-size: 20px !important;\n}"
+        type: custom:bubble-card
+      - cards:
+        - card_mod:
+            style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+          entities:
+          - sensor.outside_enviro_temperature
+          font_size: 80
+          line_color: var(--accent-color)
+          line_width: 8
+          show:
+            icon: false
+            name: false
+          type: custom:mini-graph-card
+        - card_mod:
+            style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+          entities:
+          - sensor.outside_enviro_humidity
+          font_size: 80
+          line_color: '#222D66'
+          line_width: 8
+          name: ' '
+          show:
+            icon: false
+            name: false
+          type: custom:mini-graph-card
+        - card_mod:
+            style: "\nha-card {\n  --ha-card-background: #4e4b4b10;\n  }\n"
+          entities:
+          - sensor.ny1_p_airsensor_02_2_5_g
+          font_size: 80
+          line_color: '#923172'
+          line_width: 8
+          name: ' '
+          show:
+            icon: false
+            name: false
+          type: custom:mini-graph-card
+        type: horizontal-stack
+      type: vertical-stack
+    - attribute: current_temperature
+      button_action:
+        tap_action:
+          action: toggle
+      button_type: switch
+      card_layout: normal
+      card_type: button
+      entity: fan.tbr_c300s
+      force_icon: true
+      icon: mdi:air-purifier
+      name: TBR C300S
+      scrolling_effect: false
+      show_attribute: false
+      show_icon: true
+      show_last_changed: false
+      show_last_updated: false
+      show_name: true
+      show_state: false
+      styles: '  '
+      sub_button:
+      - entity: fan.tbr_c300s
+        icon: mdi:fan-speed-1
+        name: Fan 1
+        show_attribute: true
+        show_background: true
+        show_state: false
+        tap_action:
+          action: call-service
+          data:
+            percentage: 33
+          service: fan.set_percentage
+          target:
+            entity_id: fan.tbr_c300s
+      - entity: fan.tbr_c300s
+        icon: mdi:fan-speed-2
+        name: Fan 2
+        show_background: true
+        tap_action:
+          action: call-service
+          data:
+            percentage: 66
+          service: fan.set_percentage
+          target:
+            entity_id: fan.tbr_c300s
+      - entity: fan.tbr_c300s
+        icon: mdi:fan-speed-3
+        name: Fan 3
+        show_background: true
+        tap_action:
+          action: call-service
+          data:
+            percentage: 99
+          service: fan.set_percentage
+          target:
+            entity_id: fan.tbr_c300s
+      - entity: fan.tbr_c300s
+        icon: mdi:auto-mode
+        select_attribute: preset_modes
+        show_arrow: false
+      tap_action:
+        action: toggle
+      type: custom:bubble-card
+    - cards:
+      - card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  font-size: 1rem\
+            \ !important\n  }\n"
+        entity: sensor.trash
+        name: null
+        show_entity_picture: true
+        show_name: false
+        show_state: false
+        state:
+        - entity_picture: /local/assests/general_today.png
+          value: '0'
+        - entity_picture: /local/assests/general_tomorrow.png
+          value: '1'
+        - entity_picture: /local/assests/general_off.png
+          value: '2'
+        type: custom:button-card
+      - card_mod:
+          style: "ha-card {\n  --ha-card-background: #4e4b4b10;\n  font-size: 1rem\
+            \ !important\n  }\n"
+        entity: sensor.recycling
+        name: null
+        show_entity_picture: true
+        show_name: false
+        show_state: false
+        state:
+        - entity_picture: /local/assests/recycling-today.png
+          styles:
+            card: null
+          value: '0'
+        - entity_picture: /local/assests/recycling-tomorrow.png
+          styles:
+            card: null
+          value: '1'
+        - entity_picture: /local/assests/RecyclingLater.png
+          styles:
+            card: null
+          value: '2'
+        type: custom:button-card
+      type: horizontal-stack
+    theme: Bubble
+    title: Home
+  - cards:
+    - content: '## Devices
+
+        | IP Address | MAC Address | Custom Name | Custom Description | Hostname |
+        Vendor | |------------|-------------|-------------|--------------------|----------|--------|
+
+        {% for device in state_attr(''sensor.network_scanner'', ''devices'') %} |
+        {{ device.ip }} | {{ device.mac }} | {{ device.name }} | {{ device.type }}
+        | {{ device.hostname }} | {{ device.vendor }} | {% endfor %}
+
+        '
+      type: markdown
+    - entity: sensor.reminders
+      show_completed: 3
+      type: custom:powertodoist-card
+      use_quick_add: true
+    - cards:
+      - entity: sensor.reminders
+        icons:
+        - checkbox-marked-circle-outline
+        - circle-medium
+        - undo
+        - trash-can-outline
+        show_completed: 5
+        show_item_add: true
+        show_item_delete: true
+        type: custom:powertodoist-card
+        use_quick_add: true
+      - actions_close:
+        - label:
+          - Blue
+          - '!Green'
+        - move
+        entity: sensor.todoist_project_demo
+        filter_labels:
+        - Blue
+        filter_section_id: '126441679'
+        show_item_add: true
+        show_item_delete: false
+        type: custom:powertodoist-card
+        use_quick_add: true
+      parameters:
+        centeredSlides: true
+        effect: cube
+        grabCursor: true
+        pagination: null
+        rewind: true
+        slidesPerView: auto
+        type: bullets
+      start_card: 1
+      type: custom:swipe-card
+    path: test
+    title: test
